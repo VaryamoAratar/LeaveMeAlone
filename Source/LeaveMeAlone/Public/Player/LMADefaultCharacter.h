@@ -28,6 +28,21 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
 
+	UPROPERTY()
+	UDecalComponent* CurrentCursor = nullptr;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
+	UMaterialInterface* CursorMaterial = nullptr;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
+	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpringArmComponent")
+	float ArmLengthMin = 300.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpringArmComponent")
+	float ArmLengthMax = 1400.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpringArmComponent")
+	int CameraZoomStep = 100;
+
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -40,7 +55,10 @@ private:
 	float ArmLength = 1400.0f;
 	float FOV = 55.0f;
 
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-
+	void CameraZoomIn();
+	void CameraZoomOut();
+	
 };
