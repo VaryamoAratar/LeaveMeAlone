@@ -12,9 +12,16 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArmComponent->SetupAttachment(GetRootComponent());
+	SpringArmComponent->SetUsingAbsoluteRotation(true);
+	SpringArmComponent->TargetArmLength = ArmLength;
+	SpringArmComponent->SetRelativeRotation(FRotator(YRotation, 0.0f, 0.0f));
+	SpringArmComponent->bDoCollisionTest = false;
+	SpringArmComponent->bEnableCameraLag = true;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(SpringArmComponent);
+	CameraComponent->SetFieldOfView(FOV);
+	CameraComponent->bUsePawnControlRotation = false;
 }
 
 // Called when the game starts or when spawned
@@ -33,4 +40,14 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
+}
+void ALMADefaultCharacter::MoveForward(float Value)
+{
+	AddMovementInput(GetActorForwardVector(), Value);
+}
+void ALMADefaultCharacter::MoveRight(float Value)
+{
+	AddMovementInput(GetActorRightVector(), Value);
 }
