@@ -9,6 +9,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class ULMAHealthComponent;
+class ULMAWeaponComponent;
 class UAnimMontage;
 
 UCLASS()
@@ -74,6 +75,10 @@ protected:
 	FTimerHandle TimerHandle;
 
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	ULMAWeaponComponent* WeaponComponent;
+
 
 public:
 	virtual void Tick(float DeltaTime) override;
