@@ -60,10 +60,10 @@ void ALMADefaultCharacter::BeginPlay()
 void ALMADefaultCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (Stamina != MaxStamina)
-	{
+	//if (Stamina != MaxStamina)
+	//{
 		ControlStamina();
-	}
+	//}
 
 	if (!(HealthComponent->IsDead()))
 	{
@@ -190,8 +190,8 @@ void ALMADefaultCharacter::BeginSprint()
 
 void ALMADefaultCharacter::EndSprint()
 {
-	ControlStamina();
 	bIsSprinting = false;
+	ControlStamina();
 	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
 }
 
@@ -200,6 +200,7 @@ void ALMADefaultCharacter::ControlStamina()
 	if (bIsSprinting)
 	{
 		Stamina = Stamina - SprintCost;
+
 		if (Stamina > 0)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Purple, FString::Printf(TEXT("Sprint, Stamina = %f"), Stamina));

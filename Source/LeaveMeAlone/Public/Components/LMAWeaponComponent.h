@@ -65,7 +65,10 @@ private:
 	UFUNCTION()
 	void ClipEmmpty();
 
+	void OneShoot();
+
 	float Rate;
+	bool  FireAfterReload = false;
 
 private:
 	bool bIsFiring = false; // Track if the weapon is currently firing

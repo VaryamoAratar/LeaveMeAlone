@@ -22,7 +22,7 @@ struct FAmmoWeapon
 	int32 Clips;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-	float FireRate = 0.0f;
+	float FireRate = 1.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	bool Infinite;
@@ -48,8 +48,9 @@ public:
 	FClipEmpty	ClipEmpty; 
 
 	float		 GetFireRate() const { return AmmoWeapon.FireRate; };
-	FTimerHandle GetFireTimerHandle() {		return FireTimerHandle;	};
+	FTimerHandle GetFireTimer() {		return FireTimer;	};
 	bool IsCurrentClipEmpty() const;
+	void Shoot();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -61,11 +62,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	FAmmoWeapon AmmoWeapon{ 30, 0, 0.1f, true };
 
-	FTimerHandle FireTimerHandle;
+	FTimerHandle FireTimer;
 
 	virtual void BeginPlay() override;
 
-	void Shoot();
 
 	void DecrementBullets();
 	bool IsClipFull() const;

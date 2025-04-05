@@ -61,7 +61,7 @@ protected:
 	float MaxStamina = 100.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Sprint")
-	float SprintCost = 0.3f;
+	float SprintCost = 0.5f;
 
 	UPROPERTY(EditAnywhere, Category = "Sprint")
 	float StaminaRecoveryRate = 1.3f;

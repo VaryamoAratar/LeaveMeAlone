@@ -36,9 +36,7 @@ void ULMAWeaponComponent::BeginPlay()
 
 	SpawnWeapon();
 	InitAnimNotify();
-	Rate = Weapon->GetFireRate();
 }
-
 
 void ULMAWeaponComponent::SpawnWeapon()
 {
@@ -50,6 +48,7 @@ void ULMAWeaponComponent::SpawnWeapon()
 		{
 			FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
 			Weapon->AttachToComponent(Character->GetMesh(), AttachmentRules, "r_Weapon_Socket");
+			Rate = Weapon->GetFireRate();
 		}
 	}
 }
@@ -83,7 +82,15 @@ void ULMAWeaponComponent::Fire()
 {
 	if (Weapon && !AnimReloading)
 	{
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Fire method called!"));
+
 		Weapon->Fire();
+	}
+	else
+	{
+		// ≈сли анимаци€ перезар€дки активна или оружие отсутствует
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Cannot fire: Weapon is null or reloading!"));
 	}
 }
 
@@ -97,16 +104,25 @@ void ULMAWeaponComponent::NoFire()
 void ULMAWeaponComponent::StartFiring()
 {
 	bIsFiring = true;
-	Fire(); 
 
-	GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &ULMAWeaponComponent::Fire, Rate, true);
+	// ќтладочное сообщение
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Started firing!"));
+	if (!AnimReloading)
+	{
+	OneShoot();
+	}
+
+	Fire();
+
+	// GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &ULMAWeaponComponent::Fire, Rate, true);
 }
 
 void ULMAWeaponComponent::StopFiring()
 {
 	bIsFiring = false;
 	NoFire();
-	GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
+
+	// GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
 }
 
 void ULMAWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -116,6 +132,12 @@ void ULMAWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	if (bIsFiring && Weapon && Weapon->IsCurrentClipEmpty())
 	{
 		Reload();
+		FireAfterReload = true;
+	}
+	if (!AnimReloading && bIsFiring && FireAfterReload)
+	{
+		FireAfterReload = false;
+		Fire();
 	}
 }
 
@@ -139,4 +161,7 @@ void ULMAWeaponComponent::ClipEmmpty()
 	Weapon->ChangeClip();
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	Character->PlayAnimMontage(ReloadMontage);
+}
+void ULMAWeaponComponent::OneShoot() {
+	Weapon->Shoot();
 }

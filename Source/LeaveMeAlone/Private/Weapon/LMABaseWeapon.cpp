@@ -20,13 +20,15 @@ void ALMABaseWeapon::Fire()
 {
 	if (!IsCurrentClipEmpty())
 	{
-		GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &ALMABaseWeapon::Shoot, AmmoWeapon.FireRate, true);
+		// Отладочное сообщение
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Fire method in baseWeapon called!"));
+		GetWorld()->GetTimerManager().SetTimer(FireTimer, this, &ALMABaseWeapon::Shoot, AmmoWeapon.FireRate, true);
 	}
 }
 
 void ALMABaseWeapon::NoFire()
 {
-	GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
+	GetWorld()->GetTimerManager().ClearTimer(FireTimer);
 }
 
 void ALMABaseWeapon::BeginPlay()
@@ -38,6 +40,8 @@ void ALMABaseWeapon::BeginPlay()
 
 void ALMABaseWeapon::Shoot()
 {
+	// Отладочное сообщение
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Shoot!"));
 	const FTransform SocketTransform = WeaponComponent->GetSocketTransform("Muzzle");
 	const FVector	 TraceStart = SocketTransform.GetLocation();
 	const FVector	 ShootDirection = SocketTransform.GetRotation().GetForwardVector();
