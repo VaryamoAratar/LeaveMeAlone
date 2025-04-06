@@ -83,14 +83,14 @@ void ULMAWeaponComponent::Fire()
 	if (Weapon && !AnimReloading)
 	{
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Fire method called!"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Fire method called!"));
 
 		Weapon->Fire();
 	}
 	else
 	{
 		// ≈сли анимаци€ перезар€дки активна или оружие отсутствует
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Cannot fire: Weapon is null or reloading!"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Cannot fire: Weapon is null or reloading!"));
 	}
 }
 
@@ -106,7 +106,7 @@ void ULMAWeaponComponent::StartFiring()
 	bIsFiring = true;
 
 	// ќтладочное сообщение
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Started firing!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Started firing!"));
 	if (!AnimReloading)
 	{
 	OneShoot();

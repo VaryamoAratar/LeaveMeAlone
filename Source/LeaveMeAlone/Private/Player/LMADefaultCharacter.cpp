@@ -53,7 +53,7 @@ void ALMADefaultCharacter::BeginPlay()
 	OnHealthChanged(HealthComponent->GetHealth());
 	ControlStamina();
 
-	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
+	HealthComponent->OnDeath.AddDynamic(this, &ALMADefaultCharacter::OnDeath);
 	HealthComponent->OnHealthChanged.AddUObject(this, &ALMADefaultCharacter::OnHealthChanged);
 }
 
@@ -135,7 +135,7 @@ void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
 {
 	if (NewHealth == 100.0f)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Health full")));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Health full")));
 	}
 	else if (NewHealth <= 0.0f)
 	{
@@ -144,7 +144,7 @@ void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
 	}
 }
 
@@ -201,10 +201,10 @@ void ALMADefaultCharacter::ControlStamina()
 	{
 		Stamina = Stamina - SprintCost;
 
-		if (Stamina > 0)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Purple, FString::Printf(TEXT("Sprint, Stamina = %f"), Stamina));
-		}
+		//if (Stamina > 0)
+		//{
+		//	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Purple, FString::Printf(TEXT("Sprint, Stamina = %f"), Stamina));
+		//}
 
 		if (Stamina <= 0)
 		{
@@ -216,13 +216,13 @@ void ALMADefaultCharacter::ControlStamina()
 	{
 		Stamina = Stamina + StaminaRecoveryRate / 10;
 		Stamina = FMath::Min(Stamina, MaxStamina);
-		if (Stamina != MaxStamina)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, FString::Printf(TEXT("RecoveryStamina = %f"), Stamina));
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Stamina full")));
-		}
+		//if (Stamina != MaxStamina)
+		//{
+		//	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Orange, FString::Printf(TEXT("RecoveryStamina = %f"), Stamina));
+		//}
+		//else
+		//{
+		//	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Stamina full")));
+		//}
 	}
 }

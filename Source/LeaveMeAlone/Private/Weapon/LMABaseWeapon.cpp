@@ -21,7 +21,7 @@ void ALMABaseWeapon::Fire()
 	if (!IsCurrentClipEmpty())
 	{
 		// Отладочное сообщение
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Fire method in baseWeapon called!"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Fire method in baseWeapon called!"));
 		GetWorld()->GetTimerManager().SetTimer(FireTimer, this, &ALMABaseWeapon::Shoot, AmmoWeapon.FireRate, true);
 	}
 }
@@ -41,7 +41,7 @@ void ALMABaseWeapon::BeginPlay()
 void ALMABaseWeapon::Shoot()
 {
 	// Отладочное сообщение
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Shoot!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Shoot!"));
 	const FTransform SocketTransform = WeaponComponent->GetSocketTransform("Muzzle");
 	const FVector	 TraceStart = SocketTransform.GetLocation();
 	const FVector	 ShootDirection = SocketTransform.GetRotation().GetForwardVector();
@@ -64,7 +64,7 @@ void ALMABaseWeapon::DecrementBullets()
 	if (!IsCurrentClipEmpty())
 	{
 		CurrentAmmoWeapon.Bullets--;
-		UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
+		//UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
 	}
 	if (IsCurrentClipEmpty())
 	{

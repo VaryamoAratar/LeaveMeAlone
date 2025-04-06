@@ -54,11 +54,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpringArmComponent")
 	int CameraZoomStep = 100;
 
-	UPROPERTY(EditAnywhere, Category = "Sprint")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
 	float Stamina = 100.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Sprint")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
 	float MaxStamina = 100.0f;
+
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	float GetStamina() const { return Stamina; }
 
 	UPROPERTY(EditAnywhere, Category = "Sprint")
 	float SprintCost = 0.5f;
@@ -79,6 +82,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	ULMAWeaponComponent* WeaponComponent;
 
+	UFUNCTION(BlueprintCallable)
+	void OnDeath();
 
 public:
 	virtual void Tick(float DeltaTime) override;
@@ -97,7 +102,6 @@ private:
 	void CameraZoomIn();
 	void CameraZoomOut();
 
-	void OnDeath();
 	void OnHealthChanged(float NewHealth);
 
 	void RotationPlayerOnCursor();
